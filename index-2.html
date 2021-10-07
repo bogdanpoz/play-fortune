@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="it" ng-app="dianaApp">
+
+<!-- Mirrored from hosting-dailyhoroscope.com/landing-carte/diana/it/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Oct 2021 22:30:30 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Diana cartomanzia interattiva gratuita</title>
+
+<link rel="stylesheet" href="css/reset.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<link href="https://fonts.googleapis.com/css?family=Playfair+Display&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/animate.css">
+<link rel="stylesheet" href="css/style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js" type="50b9ff2fc32629a94ce851fb-text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js" type="50b9ff2fc32629a94ce851fb-text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-cookies.js" type="50b9ff2fc32629a94ce851fb-text/javascript"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular-sanitize.js" type="50b9ff2fc32629a94ce851fb-text/javascript"></script>
+<script src="js/dianaa751.js?version=2.0" type="50b9ff2fc32629a94ce851fb-text/javascript"></script>
+<link rel="shortcut icon" href="favicon.ico" />
+</head>
+<body style="display:none;" ng-controller="dianaController as website">
+<div class="animation-box">
+<div class="back-animated"></div>
+</div>
+<div class="side-bar animated fadeIn">
+<div class="counter hide-on-small-only">
+00:{{("0" + website.counter[0]).slice(-2)}}: {{("0" + website.counter[1]).slice(-2)}}
+</div>
+<div class="folder">
+<div class="card-box" ng-repeat="card in website.cardSelected | limitTo:3">
+<img class="tarot-img z-depth-2" ng-src="{{card.img != '' && card.img || ''}}">
+</div>
+<div class="card-box" ng-if="website.cardSelected.length < 1"></div>
+<div class="card-box" ng-if="website.cardSelected.length < 2"></div>
+<div class="card-box" ng-if="website.cardSelected.length < 3"></div>
+</div>
+</div>
+<div class="page animated fadeIn">
+<div class="white">
+<h1 class="banner-title red-text darken-2">{{website.title}}</h1>
+</div>
+<div class="section">
+<div class="row" style="margin-bottom: 0px">
+<div class="col s12">
+<div id="diana-box">
+<div class="diana-badge ">
+<div class="face"></div>
+<img class="firma" src="img/firma.png">
+</div>
+<div class="text-box">
+<p ng-show="website.step === 0 ">E’ arrivato il momento di scoprire cosa la attende.<br>
+Cominci scegliendo una carta tra quelle mostrate…</p>
+<p ng-show="website.step === 1 ">Ora mi indichi la sua data di nascita.</p>
+<p ng-show="website.step === 2 ">Molto bene! Siamo a buon punto! <br>
+Ora scelga un’altra carta; sono proprio curiosa di sapere che scelta farà.</p>
+<p ng-show="website.step === 3 ">Perfetto, mi mancano queste ultime informazioni essenziali
+per
+formulare la corretta lettura.</p>
+<p ng-show="website.step === 4 ">Ci siamo quasi! Si concentri…<br>
+Scelga la terza, ultima e decisiva carta.</p>
+<p ng-show="website.step === 5 ">E’ FATTA!<br>
+Adesso ho tutto ciò che mi serve per mettermi al lavoro ed elaborare la sua lettura.<br>
+Può comunicarmi il suo indirizzo e-mail sul quale vuole ricevere l’esito della
+cartomanzia?
+</p>
+<p ng-show="website.step === 6 ">
+CONGRATULAZIONI! <br>
+Grazie per la fiducia che ha riposto in me affidandomi questo importante incarico.<br>
+Io mi sono già messa al lavoro così da farle avere il risultato della sua cartomanzia in
+massimo 48 ore
+all’indirizzo email che mi ha comunicato poco fa.
+Ho solo una cortesia da chiederle: per evitare il rischio di non ricevere/perdere tutto
+il
+mio lavoro,
+la invito ad aggiungere la mia casella email {{website.sender}} tra i suoi contatti di
+posta. Verifichi anche la
+casella di posta indesiderata/SPAM perchè può capitare che le mie email le giungano lì
+per
+sbaglio.
+</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section">
+<div class="game">
+<div id="desk">
+<div class="row step" ng-show="website.step === 0 || website.step === 2 || website.step === 4 ">
+<div class="col s4 m3 l2" ng-repeat="card in website.cards | limitTo:website.limitCard">
+<div class="flip-card" ng-click="website.cardChose(card,$index,$event)" ng-class="{'chose':card.selected == true}" ng-hide="card.hide == true">
+<div class="flip-card-inner">
+<div class="flip-card-front">
+<img class="tarot-img z-depth-2" src="tarocchi/card-front.png">
+</div>
+<div class="flip-card-back">
+<img class="tarot-img z-depth-2" ng-src="{{card.img != '' && card.img || ''}}">
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row step" ng-show="website.step === 1">
+<div class="col s12 m4 l4">
+<h2 class="date-title">Giorno</h2>
+<h6 class="date-select">{{website.day}} </h6>
+<div class="input-box no-top-radius">
+<p ng-repeat="day in website.days" class="input-radio">
+<label style="width: 100%">
+<input name="day" type="radio" id="{{day}}" value="{{day.day}}" ng-model="website.day" ng-change="website.checkDate()" />
+<span>{{day.day}}</span>
+</label>
+ </p>
+</div>
+</div>
+<div class="col s12 m4 l4">
+<h2 class="date-title">Mese</h2>
+<h6 class="date-select">{{website.month}} </h6>
+<div class="input-box no-top-radius">
+<p ng-repeat="month in website.months" class="input-radio">
+<label>
+<input name="month" type="radio" id="{{month}}" value="{{month.month}}" ng-model="website.month" ng-change="website.checkDate()" />
+<span>{{month.month}}</span>
+</label>
+</p>
+</div>
+</div>
+<div class="col s12 m4 l4">
+<h2 class="date-title">Anno</h2>
+<h6 class="date-select">{{website.year}} </h6>
+<div class="input-box no-top-radius">
+<p ng-repeat="year in website.yearsRange(1920,2002)" class="input-radio">
+<label>
+<input name="year" type="radio" id="year{{year}}" value="{{year}}" ng-model="website.year" ng-change="website.checkDate()" />
+<span>{{year}}</span>
+</label>
+</p>
+</div>
+</div>
+</div>
+<div class="row step" ng-show="website.step === 3">
+<div class="col s12 m4">
+<h2 class="date-title">Nome</h2>
+<div class="input-box">
+<input name="firstName" placeholder="Digiti il suo Nome" autocomplete="off" type="text" ng-init="website.firstName=''" ng-model="website.firstName" />
+</div>
+<p class="error" ng-if="website.nameWarning === true">
+{{website.nameWarningMessage}}
+</p>
+</div>
+<div class="col s12 m4">
+<h2 class="date-title">Cognome</h2>
+<div class="input-box">
+<input name="secondName" placeholder="Digiti il suo cognome" autocomplete="off" type="text" ng-init="website.secondName=''" ng-model="website.secondName" />
+</div>
+<p class="error" ng-if="website.surnameWarning === true">
+{{website.surnameWarningMessage}}
+</p>
+</div>
+<div class="col s12 m4">
+<h2 class="date-title">Genere</h2>
+<div class="input-box">
+<p class="input-radio">
+<label>
+<input name="genere" type="radio" id="donna" value="f" ng-model="website.genere" ng-init="website.genere=''" />
+<span>Donna</span>
+</label>
+</p>
+<p class="input-radio">
+<label>
+<input name="genere" type="radio" id="uomo" value="m" ng-model="website.genere" ng-init="website.genere=''" />
+<span>Uomo</span>
+</label>
+</p>
+</div>
+<p class="error" ng-if="website.genderWarning === true">{{website.genderWarningMessage}}</p>
+</div>
+<div class="col s12 m4"></div>
+<div class="col s12 m4">
+<a href="#" class="btn conferma" ng-class="{'pulsed':website.error === false}" ng-click="website.checkName()">CONTINUA</a>
+</div>
+<div class="col s12 m4"></div>
+</div>
+<div class="row step" ng-show="website.step === 5">
+<div class="col s12">
+<h2 class="date-title">Indirizzo e-mail</h2>
+<div class="input-box">
+<input name="mail" placeholder="indirizzo email" autocomplete="off" type="text" ng-model="website.mail" ng-init="website.mail=''" />
+</div>
+<p class="error" ng-if="website.error === true">{{website.errorMSG}}</p>
+</div>
+<div class="col s12">
+<div class="input-box">
+<p>
+<label>
+<input type="checkbox" ng-model="website.c_privacy" />
+<span style="color: #484848;">* Ho preso visione dell'<a href="privacy.html">informativa privacy </a></span>
+</label>
+</p>
+<div class="divider"></div>
+<p>
+<label>
+<input type="checkbox" ng-model="website.c_marketing" />
+<span style="color: #484848;">Acconsento espressamente al trattamento dei miei dati per finalità di marketing</span>
+</label>
+</p>
+</div>
+</div>
+<div class="col s12">
+<a href="#" class="btn conferma" ng-class="{'pulsed':website.error === false}" ng-click="website.validationConfirm()">conferma e ricevi la cartomanzia</a>
+</div>
+</div>
+<div class="row step" ng-show="website.step === 6">
+<div class="col s12">
+<div class="request-error" ng-if="website.requestError">
+
+</div>
+<div class="pixel" ng-bind-html="website.pixel"></div>
+<div class="message-box">
+{{website.messageActive}}
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="footer">
+<p>
+L´acquirente o frequentatore è messo al corrente che il possessore del dominio manterrà le informazioni
+inserite da quest´ultimo nella homepage del sito, fornisce quindi il proprio benestare, dopo
+l´iscrizione a www.dianaveggenza.com ad accogliere da quest´ultimo nuove proposte.
+Tale situazione è risolvibile dal frequentatore in ogni momento e quando lo riterrà opportuno tramite il
+semplice cliccare sul link presente in ogni e-mail inviatagli.
+</p>
+<p>
+<a href="condizioni_vendita.html">Condizioni Generali di Vendita</a> -
+<a href="privacy.html">Protezione dei dati personali</a> -
+<a href="cookie.html">Cookie policy</a>
+</p>
+</div>
+</div>
+<div class="cookie-box animated fadeInUp" ng-class="{'fadeOutDown': website.hideCookieBar == true}" on-scroll="website.acceptCookie()">
+<p>Questo sito utilizza cookie, anche di terze parti, per inviarti pubblicità e servizi in linea con le tue
+preferenze. Se vuoi saperne di più o negare il consenso a tutti o ad alcuni cookie clicca qui.</p>
+<div class="btn" ng-click="website.acceptCookie()">accetto</div>
+</div>
+<script src="https://hosting-dailyhoroscope.com/cdn-cgi/scripts/7d0fa10a/cloudflare-static/rocket-loader.min.js" data-cf-settings="50b9ff2fc32629a94ce851fb-|49" defer=""></script></body>
+<script src="js/diana.js" type="50b9ff2fc32629a94ce851fb-text/javascript"></script>
+<script type="50b9ff2fc32629a94ce851fb-text/javascript">
+document.addEventListener('DOMContentLoaded', (event) => {
+     document.getElementsByTagName("body")[0].removeAttribute("style");
+});
+</script>
+
+<!-- Mirrored from hosting-dailyhoroscope.com/landing-carte/diana/it/index.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 05 Oct 2021 22:30:30 GMT -->
+</html>
